@@ -1,0 +1,13 @@
+{
+  "name": "Local Gas Deals",
+  "short_name": "Gas Deals",
+  "description": "Find the cheapest gas near you",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#0e1726",
+  "theme_color": "#0a111d",
+  "icons": [
+    { "src": "icons/icon192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
