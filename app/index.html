@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Local Gas Deals</title>
+  <meta name="theme-color" content="#0a111d">
+  <!-- Tall, narrow font for prices, like a gas-station sign -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500&display=swap">
+  <!-- These let you add the app to your phone's home screen -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/icon192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <!-- Leaflet draws the map -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>⛽ Local Gas Deals</h1>
+    <p class="sub">Find the cheapest gas near you</p>
+  </header>
+
+  <main>
+    <!-- WHERE TO SEARCH -->
+    <section class="panel">
+      <button id="btn-locate" class="btn primary wide">📍 Use my location</button>
+      <form id="search-form" class="search">
+        <input id="search-input" type="search" placeholder="…or type an area, e.g. Beltline or T2P" autocomplete="off">
+        <button class="btn" type="submit">Search</button>
+      </form>
+      <div class="fuels" role="radiogroup" aria-label="Fuel type">
+        <button class="chip" data-fuel="regular" role="radio">Regular</button>
+        <button class="chip" data-fuel="premium" role="radio">Premium</button>
+        <button class="chip" data-fuel="diesel" role="radio">Diesel</button>
+      </div>
+      <div class="options">
+        <label>Within
+          <select id="radius">
+            <option value="2">2 km</option>
+            <option value="5" selected>5 km</option>
+            <option value="10">10 km</option>
+            <option value="30">All of Calgary</option>
+          </select>
+        </label>
+        <div class="sort" role="radiogroup" aria-label="Sort by">
+          <button class="chip active" data-sort="near" role="radio">Nearest</button>
+          <button class="chip" data-sort="cheap" role="radio">Cheapest</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- LIST OR MAP -->
+    <div class="views" role="radiogroup" aria-label="Show as">
+      <button class="seg active" data-view="list" role="radio">📋 List</button>
+      <button class="seg" data-view="map" role="radio">🗺️ Map</button>
+      <button class="seg" data-view="top" role="radio">🏆 Top</button>
+    </div>
+
+    <!-- "37 prices shared today" -->
+    <div id="today" class="today hidden"></div>
+
+    <div id="status" class="status" aria-live="polite">Tap "Use my location" to find gas stations near you.</div>
+
+    <!-- CHEAPEST PRICE YOU'VE SAVED NEARBY -->
+    <section id="best" class="best hidden"></section>
+
+    <!-- MAP OF STATIONS -->
+    <div id="map-wrap" class="map-wrap hidden">
+      <div id="map"></div>
+      <button id="btn-recenter" class="recenter" title="Back to my location" aria-label="Back to my location">◎</button>
+    </div>
+
+    <!-- LIST OF STATIONS -->
+    <ul id="list" class="list"></ul>
+
+    <!-- LEADERBOARD AND YOUR POINTS -->
+    <section id="board" class="board hidden">
+      <div class="panel">
+        <label for="nick-input" class="nick-label">Your nickname</label>
+        <form id="nick-form" class="search">
+          <input id="nick-input" maxlength="20" placeholder="e.g. BeltlineBargains" autocomplete="nickname">
+          <button class="btn primary" type="submit">Save</button>
+        </form>
+        <div id="my-points" class="my-points"></div>
+        <p class="how">➕ New price = <b>10 pts</b> · ✓ Still correct = <b>2 pts</b><br>
+          Points count once per station per day.</p>
+      </div>
+      <h2 class="board-title">This week's top spotters</h2>
+      <ol id="board-list" class="board-list"></ol>
+    </section>
+  </main>
+
+  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+  <footer>
+    <span id="footer-prices">Prices shown are ones you've added on this device.</span>
+    For live prices, check <a href="https://www.gasbuddy.com/" target="_blank" rel="noopener">GasBuddy</a>.<br>
+    Station data © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors.
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
